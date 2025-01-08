@@ -17,6 +17,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"net/http"
 	"strings"
@@ -68,7 +69,9 @@ type topicEventJSON struct {
 	// The pubsub topic which publisher sent to.
 	Topic string `json:"topic"`
 	// PubsubName is name of the pub/sub this message came from
-	PubsubName string `json:"pubsubname"`
+	PubsubName  string `json:"pubsubname"`
+	TraceParent string `json:"traceparent,omitempty"`
+	TraceId     string `json:"traceid,omitempty"`
 }
 
 func (in topicEventJSON) getData() (data any, rawData []byte) {
@@ -76,6 +79,7 @@ func (in topicEventJSON) getData() (data any, rawData []byte) {
 		err error
 		v   any
 	)
+	fmt.Printf("F1\n")
 	if len(in.Data) > 0 {
 		rawData = []byte(in.Data)
 		data = rawData
@@ -308,6 +312,8 @@ func (s *Server) AddTopicEventSubscriber(sub *common.Subscription, subscriber co
 				Subject:         in.Subject,
 				PubsubName:      in.PubsubName,
 				Topic:           in.Topic,
+				TraceParent:     in.TraceParent,
+				TraceId:         in.TraceId,
 				Metadata:        getCustomMetdataFromHeaders(r),
 			}
 
