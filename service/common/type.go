@@ -46,13 +46,9 @@ type TopicEvent struct {
 	// PubsubName is name of the pub/sub this message came from
 	PubsubName string `json:"pubsubname"`
 	// Metadata is the custom metadata attached to the event.
-	Metadata  map[string]string `json:"metadata,omitempty"`
-	TraceInfo TopicTraceInfo    `json:"traceinfo,omitempty"`
-}
-
-type TopicTraceInfo struct {
-	TraceParent string `json:"traceparent,omitempty"`
-	TraceId     string `json:"traceid,omitempty"`
+	Metadata    map[string]string `json:"metadata,omitempty"`
+	TraceParent string            `json:"traceparent,omitempty"`
+	TraceId     string            `json:"traceid,omitempty"`
 }
 
 func (e *TopicEvent) Struct(target interface{}) error {
