@@ -17,7 +17,6 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"errors"
-	"fmt"
 	"io"
 	"net/http"
 	"strings"
@@ -79,7 +78,6 @@ func (in topicEventJSON) getData() (data any, rawData []byte) {
 		err error
 		v   any
 	)
-	fmt.Printf("F1\n")
 	if len(in.Data) > 0 {
 		rawData = []byte(in.Data)
 		data = rawData
